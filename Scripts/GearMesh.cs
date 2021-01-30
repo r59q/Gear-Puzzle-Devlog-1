@@ -72,7 +72,7 @@ public class GearMesh : MonoBehaviour
 
         // Initialize final arrays
         Vector3[] verts = new Vector3[topFanVerts.Length * 2];
-        Vector3[] norms = new Vector3[verts.Length];
+        // Vector3[] norms = new Vector3[verts.Length];
         Vector2[] uvs = new Vector2[verts.Length];
         int[] tris = new int[topFanTris.Length * 2 + cylindricalTris.Length];
         // Copy vertices
@@ -84,15 +84,15 @@ public class GearMesh : MonoBehaviour
         bottomFanTris.CopyTo(tris, topFanTris.Length);
         cylindricalTris.CopyTo(tris, topFanTris.Length * 2);
 
-        // Add normals
-        for (int i = 0; i < topFanVerts.Length; i++)
+        // Add normals - EDIT: we dont need them
+        /*for (int i = 0; i < topFanVerts.Length; i++)
         {
             norms[i] = topFanNormal;
         }
         for (int i = 0; i < bottomFanVerts.Length; i++)
         {
             norms[i + topFanVerts.Length] = bottomFanNormal;
-        }
+        }*/ 
 
         // Get vertex pairs
         VertexPair[] pairs = SideVertPairs();
@@ -121,8 +121,8 @@ public class GearMesh : MonoBehaviour
         Mesh mesh = new Mesh();
         mesh.vertices = verts;
         mesh.triangles = tris;
-        mesh.normals = norms;
-        // mesh.uv = uvs;
+        // mesh.normals = norms; // Dont need em
+        // mesh.uv = uvs; // Calculated by unity.
         UnityEditor.Unwrapping.GenerateSecondaryUVSet(mesh);
         mesh.RecalculateNormals();
         // mesh.RecalculateBounds();
